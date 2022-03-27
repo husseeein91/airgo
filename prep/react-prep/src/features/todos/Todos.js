@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addTodo, removeTodo, toggleCompleted } from "./todosSlice";
 
+import { Button, Grid, TextField } from "@mui/material";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Todo from "../../components/Todo";
 
 const Todos = () => {
@@ -27,32 +29,50 @@ const Todos = () => {
   };
   return (
     <>
-      <div className="max-h-72 overflow-y-scroll px-4 py-4 my-6 mx-auto max-w-lg">
+      <Grid container columnSpacing={12} rowSpacing={2}>
+        <Grid
+          item
+          xs={12}
+          sx={{ display: "flex", justifyContent: "space-around" }}
+        >
+          <TextField
+            sx={{
+              width: "80%",
+              outlineColor: "primary",
+              borderColor: "primary",
+            }}
+            placeholder="Ex.meet with jane"
+            color="primary"
+            type="text"
+            focused
+            variant="standard"
+            onChange={handleChange}
+          />
+          <Button
+            color="primary"
+            variant="contained"
+            size="large"
+            onClick={handleAddTodo}
+          >
+            Add Todo{" "}
+            <AddCircleIcon sx={{ paddingX: "1px", marginLeft: "15px" }} />
+          </Button>
+        </Grid>
         {todos.length <= 0 ? (
           <div>you have no todos right now try add some.</div>
         ) : (
           todos.map((todo) => (
-            <Todo
-              key={todo.id}
-              data={todo}
-              markComplete={toggleCompleted}
-              deleteTodo={removeTodo}
-            />
+            <Grid key={todo.id} item xs={6}>
+              <Todo
+                key={todo.id}
+                data={todo}
+                markComplete={toggleCompleted}
+                deleteTodo={removeTodo}
+              />
+            </Grid>
           ))
         )}
-      </div>
-      <input
-        className="placeholder:text-white outline-none w-1/3 mx-2 px-2 py-2 text-white  bg-cyan-600"
-        placeholder="Ex.meet with jane"
-        type="text"
-        onChange={handleChange}
-      />
-      <button
-        className="px-4 py-2 bg-cyan-600 text-white "
-        onClick={handleAddTodo}
-      >
-        Add Todo
-      </button>
+      </Grid>
     </>
   );
 };
