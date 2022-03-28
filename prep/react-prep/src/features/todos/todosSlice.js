@@ -1,18 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  todos: [
-    {
-      id: 1,
-      title: "buy milk",
-      completed: false,
-    },
-    {
-      id: 2,
-      title: "go to the bank",
-      completed: false,
-    },
-  ],
+  todos: [],
+
+  nextId: 1,
 };
 
 export const todosSlice = createSlice({
@@ -25,6 +16,7 @@ export const todosSlice = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.todos.unshift(action.payload);
+      state.nextId++;
     },
     removeTodo: (state, action) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
